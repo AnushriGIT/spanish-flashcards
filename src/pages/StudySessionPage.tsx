@@ -4,6 +4,7 @@ import Flashcard from '../components/Flashcard';
 import { flashcards, Flashcard as FlashcardType } from '../data/flashcards';
 import { useWrongCards } from '../state/WrongCardsContext';
 import { useStats } from '../state/StatsContext';
+import { formatCategoryLabel } from '../utils/text';
 
 export default function StudySessionPage(): JSX.Element {
 	const params = useParams();
@@ -59,7 +60,7 @@ export default function StudySessionPage(): JSX.Element {
 
 	return (
 		<div>
-			<h2>Study — {category[0].toUpperCase() + category.slice(1)}</h2>
+			<h2>Study — {formatCategoryLabel(category)}</h2>
 			{!isDone ? (
 				<>
 					<p>Click the card to flip between Spanish and English.</p>

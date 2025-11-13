@@ -9,6 +9,9 @@ export type Flashcard = {
 	quiz: QuizInfo;
 };
 
+// Reusable alias for category keys across the app
+export type CategoryKey = Flashcard['category'];
+
 export const flashcards: Flashcard[] = [
 	// Animals
 	{

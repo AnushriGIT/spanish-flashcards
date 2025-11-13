@@ -1,6 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import { render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import StatsPage from '../pages/StatsPage';
 import { StatsProvider } from '../state/StatsContext';
 
@@ -15,7 +16,9 @@ test('StatsPage shows totals and per-category breakdown from localStorage', () =
 
 	render(
 		<StatsProvider>
-			<StatsPage />
+			<MemoryRouter>
+				<StatsPage />
+			</MemoryRouter>
 		</StatsProvider>
 	);
 

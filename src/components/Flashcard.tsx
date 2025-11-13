@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Displays a single flashcard with click-to-flip behavior between Spanish (front) and English (back).
 type FlashcardProps = {
 	spanish: string;
 	english: string;

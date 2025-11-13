@@ -1,7 +1,5 @@
 import React from 'react';
-import type { Flashcard } from '../data/flashcards';
-
-export type CategoryKey = Flashcard['category'];
+import type { CategoryKey } from '../data/flashcards';
 
 export type StatsPerCategory = {
 	studied: number;
@@ -26,6 +24,7 @@ const defaultState: StatsState = {
 	verbs: { ...defaultCategoryStats }
 };
 
+// Provides application-wide study/quiz statistics with localStorage persistence.
 const StatsContext = React.createContext<StatsContextValue | undefined>(undefined);
 
 function loadInitial(): StatsState {
@@ -44,6 +43,7 @@ function loadInitial(): StatsState {
 }
 
 export function StatsProvider(props: { children: React.ReactNode }): JSX.Element {
+	// Initialize from localStorage and persist on every change.
 	const [state, setState] = React.useState<StatsState>(loadInitial);
 
 	React.useEffect(() => {

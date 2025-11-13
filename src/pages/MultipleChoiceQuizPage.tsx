@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { flashcards, Flashcard as FlashcardType } from '../data/flashcards';
 import { useStats } from '../state/StatsContext';
+import { formatCategoryLabel, normalizeAnswer } from '../utils/text';
 
 type McCard = FlashcardType & { quiz: { type: 'multiple-choice'; options: string[] } };
 
@@ -54,7 +55,7 @@ export default function MultipleChoiceQuizPage(): JSX.Element {
 	function choose(option: string): void {
 		if (selected !== null) return; // prevent changes after selection
 		setSelected(option);
-		const correct = option.toLowerCase().trim() === current.english.toLowerCase().trim();
+		const correct = normalizeAnswer(option) === normalizeAnswer(current.english);
 		setIsCorrect(correct);
 		stats.recordAnswer(category, correct);
 	}
@@ -67,7 +68,7 @@ export default function MultipleChoiceQuizPage(): JSX.Element {
 
 	return (
 		<div>
-			<h2>Quiz — Multiple Choice ({category[0].toUpperCase() + category.slice(1)})</h2>
+			<h2>Quiz — Multiple Choice ({formatCategoryLabel(category)})</h2>
 			{!isDone ? (
 				<>
 					<p>Translate:</p>
@@ -76,7 +77,7 @@ export default function MultipleChoiceQuizPage(): JSX.Element {
 					<div style={{ display: 'grid', gap: 8, gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
 						{current.quiz.options.map(opt => {
 							const picked = selected === opt;
-							const correct = opt.toLowerCase().trim() === current.english.toLowerCase().trim();
+							const correct = normalizeAnswer(opt) === normalizeAnswer(current.english);
 							const showFeedback = selected !== null;
 							const className =
 								showFeedback && picked

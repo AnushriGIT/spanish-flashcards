@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { flashcards, Flashcard as FlashcardType } from '../data/flashcards';
 import { useStats } from '../state/StatsContext';
+import { formatCategoryLabel, normalizeAnswer } from '../utils/text';
 
 export default function FillBlankQuizPage(): JSX.Element {
 	const params = useParams();
@@ -50,9 +51,7 @@ export default function FillBlankQuizPage(): JSX.Element {
 
 	function check(): void {
 		if (checked) return;
-		const normalized = answer.toLowerCase().trim();
-		const correct = current.english.toLowerCase().trim();
-		const ok = normalized === correct;
+		const ok = normalizeAnswer(answer) === normalizeAnswer(current.english);
 		setIsCorrect(ok);
 		stats.recordAnswer(category, ok);
 		setChecked(true);
@@ -74,7 +73,7 @@ export default function FillBlankQuizPage(): JSX.Element {
 
 	return (
 		<div>
-			<h2>Quiz — Fill in the Blank ({category[0].toUpperCase() + category.slice(1)})</h2>
+			<h2>Quiz — Fill in the Blank ({formatCategoryLabel(category)})</h2>
 			{!isDone ? (
 				<>
 					<p>Type the English translation:</p>

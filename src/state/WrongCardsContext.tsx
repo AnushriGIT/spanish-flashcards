@@ -1,26 +1,27 @@
 import React from 'react';
-import type { Flashcard } from '../data/flashcards';
+import type { Flashcard, CategoryKey } from '../data/flashcards';
 
-export type WrongCardsState = Record<string, Flashcard[]>;
+export type WrongCardsState = Record<CategoryKey, Flashcard[]>;
 
 type WrongCardsContextValue = {
-	getWrongCards: (category: string) => Flashcard[];
-	setWrongCards: (category: string, cards: Flashcard[]) => void;
-	resetWrongCards: (category: string) => void;
+	getWrongCards: (category: CategoryKey) => Flashcard[];
+	setWrongCards: (category: CategoryKey, cards: Flashcard[]) => void;
+	resetWrongCards: (category: CategoryKey) => void;
 	resetAll: () => void;
 };
 
+// Tracks "wrong" cards per category across sessions to support a redo flow.
 const WrongCardsContext = React.createContext<WrongCardsContextValue | undefined>(undefined);
 
 export function WrongCardsProvider(props: { children: React.ReactNode }): JSX.Element {
 	const [state, setState] = React.useState<WrongCardsState>({});
 
 	const value = React.useMemo<WrongCardsContextValue>(() => ({
-		getWrongCards: (category: string) => state[category] ?? [],
-		setWrongCards: (category: string, cards: Flashcard[]) => {
+		getWrongCards: (category: CategoryKey) => state[category] ?? [],
+		setWrongCards: (category: CategoryKey, cards: Flashcard[]) => {
 			setState(prev => ({ ...prev, [category]: cards }));
 		},
-		resetWrongCards: (category: string) => {
+		resetWrongCards: (category: CategoryKey) => {
 			setState(prev => {
 				const next = { ...prev };
 				delete next[category];
