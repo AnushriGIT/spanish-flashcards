@@ -2,7 +2,7 @@
 
 ## 🟢 Phase 1: Project Setup and Static Pages
 
-- [ ] Initialize project with Vite + React + TypeScript  
+- [x] Initialize project with Vite + React + TypeScript  
   ✅ *Acceptance Criteria:* Running `npm run dev` starts a Vite dev server with a working React+TS project.
 
 - [x] Set up file structure (`/components`, `/data`, `/pages`)  
